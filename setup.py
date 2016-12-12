@@ -10,13 +10,15 @@ entry_points = {
 # copy the template files to the same relative location in the installation directory
 # data_files = [('perflog/data', glob.glob('perflog/data/*'))]
 
-setup(name="poc",
+setup(name='poc',
       version='0.1',
-      description='',
+      description='OwnCloud client',
       author='Florian Kaiser, Klaus Reuter',
       author_email='khr@mpcdf.mpg.de',
       packages=['poc'],
       install_requires=['pyocclient'],
       entry_points=entry_points,
-      data_files=data_files,
       zip_safe=False)
+
+    #   data_files=data_files,
+
