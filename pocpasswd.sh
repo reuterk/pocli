@@ -6,5 +6,5 @@ function pocpasswd() {
     echo -n " Enter your OwnCloud password (will not be echoed/visible): "
     read -s PASSWORD
     echo
-    export POC_PASSWORD="$PASSWORD"
+    export OC_PASSWORD="$PASSWORD"
 }

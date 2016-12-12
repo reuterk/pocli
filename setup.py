@@ -12,7 +12,7 @@ entry_points = {
 
 setup(name='poc',
       version='0.1',
-      description='OwnCloud client',
+      description='simple Python based command line client for OwnCloud',
       author='Florian Kaiser, Klaus Reuter',
       author_email='khr@mpcdf.mpg.de',
       packages=['poc'],
@@ -21,4 +21,3 @@ setup(name='poc',
       zip_safe=False)
 
     #   data_files=data_files,
-
