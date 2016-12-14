@@ -100,7 +100,28 @@ def _init_pocrc():
 
 
 def put(argparse_args):
-    pass
+    if (argparse_args.destination):
+        destination = argparse_args.destination
+    else:
+        destination = '/'
+    args = vars(argparse_args)
+    file_list = args['files']
+    if (len(file_list) > 0):
+        client = _client()
+        try:
+            lst = client.list(destination)
+        except:
+            print("remote directory \"%s\" is not accessible" % destination)
+        else:
+            for file in file_list:
+                if os.path.isfile(file):
+                    file_basename = os.path.basename(file)
+                    client.put_file(os.path.join(destination, file_basename), file)
+                else:
+                    print("%s is not a regular file" % file)
+        client.logout()
+    else:
+        print("nothing to do")
 
 
 def get(argparse_args):
@@ -114,8 +135,12 @@ def ls(argparse_args):
         directory_list.append('/')
     client = _client()
     for dir in directory_list:
-        lst = client.list(dir)
-        _print_file_list(lst)
+        try:
+            lst = client.list(dir)
+        except:
+            print("remote directory \"%s\" is not accessible" % dir)
+        else:
+            _print_file_list(lst)
     client.logout()
 
 

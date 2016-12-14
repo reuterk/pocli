@@ -13,9 +13,11 @@ def parse_args():
     subparsers = parser.add_subparsers(help='Commands')
     # ---
     parser_put = subparsers.add_parser(
-        'put', help='upload file')
+        'put', help='upload file(s)')
     # parser_put.add_argument('--input', type=str, help='input parameter file')
     parser_put.set_defaults(func=lib.put)
+    parser_put.add_argument('--destination', '-d', type=str, help='remote destination directory')
+    parser_put.add_argument('files', nargs=argparse.REMAINDER, help='file(s)')
     # ---
     parser_get = subparsers.add_parser(
         'get', help='download file')
