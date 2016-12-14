@@ -15,6 +15,7 @@ import locale
 import argparse
 import owncloud
 import datetime
+import getpass
 
 
 __version__ = 0.1

@@ -38,6 +38,11 @@ def parse_args():
         help='check if current OwnCloud configuration works')
     parser_check.set_defaults(func=lib.check)
     # ---
+    parser_init = subparsers.add_parser(
+        'init',
+        help='initialize .pocrc config file')
+    parser_init.set_defaults(func=lib.init)
+    # ---
     return parser.parse_args()
 
 
