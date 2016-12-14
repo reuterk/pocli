@@ -3,7 +3,7 @@
 # Source ("source") this file into your bash session and then call `pocpasswd`.
 
 function pocpasswd() {
-    echo -n " Enter your OwnCloud password (will not be echoed/visible): "
+    echo -n "OwnCloud password (will not be echoed/visible): "
     read -s PASSWORD
     echo
     export OC_PASSWORD="$PASSWORD"

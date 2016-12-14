@@ -8,6 +8,7 @@ import os
 import sys
 import math
 import yaml
+import time
 import locale
 import argparse
 import owncloud
@@ -117,8 +118,15 @@ def put(argparse_args):
         else:
             for file in file_list:
                 if os.path.isfile(file):
+                    size_mb = float(os.path.getsize(file))/float(1024*1024)
                     file_basename = os.path.basename(file)
+                    if (size_mb > 100.0):
+                        print("%s : large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
+                    t0 = time.time()
                     client.put_file(os.path.join(destination, file_basename), file)
+                    t1 = time.time()
+                    dt = t1 - t0
+                    print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
                 else:
                     print("%s is not a regular file" % file)
         client.logout()
@@ -137,7 +145,13 @@ def get(argparse_args):
         client = _client()
         for file in file_list:
             file_basename = os.path.basename(file)
-            client.get_file(file, os.path.join(destination, file_basename))
+            file_target = os.path.join(destination, file_basename)
+            t0 = time.time()
+            client.get_file(file, file_target)
+            t1 = time.time()
+            dt = t1 - t0
+            size_mb = float(os.path.getsize(file_target))/float(1024*1024)
+            print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
         client.logout()
     else:
         print("invalid destination")
