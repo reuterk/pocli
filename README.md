@@ -18,11 +18,11 @@ basic functionality (optional arguments in parentheses)
 
 * upload single file
 
-  `poc put local_file_name (remote_file_name)`
+  `poc put local_file_name`
 
 * download single file
 
-  `poc get remote_file_name (local_file_name)`
+  `poc get remote_file_name`
 
 * list remote files and folders
 
@@ -31,6 +31,8 @@ basic functionality (optional arguments in parentheses)
 * create remote directory
 
   `poc mkdir remote_folder`
+
+* initialize configuration, create "~/.pocrc"
 
 * check if configuration actually works
 
@@ -41,9 +43,8 @@ under the hood
 --------------
 
 In any case a client (== connection) needs to be created.  This requires a valid
-configuration.  The configuration file is located at "~/.pocrc".  It is created
-at the first invocation of any of the above commands, defaulting to MPCDF
-datashare.  No credentials are stored in "~/.pocrc".
+configuration.  The configuration file is located at "~/.pocrc".
+No credentials are ever stored in "~/.pocrc".
 
 
 credentials and security considerations

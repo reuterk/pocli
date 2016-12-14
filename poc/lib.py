@@ -1,4 +1,4 @@
-"""
+"""poc library and basic methods
 """
 
 
@@ -125,7 +125,20 @@ def put(argparse_args):
 
 
 def get(argparse_args):
-    pass
+    if (argparse_args.destination):
+        destination = argparse_args.destination
+    else:
+        destination = '.'
+    args = vars(argparse_args)
+    file_list = args['files']
+    if os.path.isdir(destination):
+        client = _client()
+        for file in file_list:
+            file_basename = os.path.basename(file)
+            client.get_file(file, os.path.join(destination, file_basename))
+        client.logout()
+    else:
+        print("invalid destination")
 
 
 def ls(argparse_args):
