@@ -37,17 +37,6 @@ def _get_pocrc():
     return rcfile
 
 
-# """Construct ownCloud client from environment variables"""
-# def _client_from_environ():
-#     for var in ['OC_USER', 'OC_PASSWORD', 'OC_SERVER']:
-#         if not os.environ.has_key(var):
-#             raise CLIError("%s not set." % (var,))
-#     debug = os.environ.has_key('OC_DEBUG')
-#     client = owncloud.Client(os.environ['OC_SERVER'], debug=debug)
-#     client.login(os.environ['OC_USER'], os.environ['OC_PASSWORD'])
-#     return client
-
-
 """Construct ownCloud client based on the configuration file."""
 def _client():
     if os.environ.has_key('OC_PASSWORD'):
@@ -82,7 +71,7 @@ def _filesizeformat(value):
     if suffix_index == 0:
         scaled_value = value
     elif suffix_index > len(_FILESIZE_SUFFIXES)-1:
-        raise ValueError("Number too big")
+        raise ValueError("number too big")
     else:
         scaled_value = round(float(value) / pow(_FILESIZE_BASE, suffix_index), 2)
     suffix = _FILESIZE_SUFFIXES[suffix_index]
@@ -119,11 +108,27 @@ def get(argparse_args):
 
 
 def ls(argparse_args):
-    pass
+    args = vars(argparse_args)
+    directory_list = args['dir']
+    if (len(directory_list) == 0):
+        directory_list.append('/')
+    client = _client()
+    for dir in directory_list:
+        lst = client.list(dir)
+        _print_file_list(lst)
+    client.logout()
 
 
 def mkdir(argparse_args):
-    pass
+    args = vars(argparse_args)
+    directory_list = args['dir']
+    if (len(directory_list) > 0):
+        client = _client()
+        for dir in directory_list:
+            client.mkdir(dir)
+        client.logout()
+    else:
+        print("nothing to do")
 
 
 def check(argparse_args):
