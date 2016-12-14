@@ -1,14 +1,15 @@
 Python OwnCloud Client (poc)
 ============================
 
-Copyright (c) 2016, 2017 Florian Kaiser, fek@rzg.mpg.de
-                           Klaus Reuter, khr@rzg.mpg.de
+Copyright (c) 2016, 2017 Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
 
 
 Requirements and installation
 -----------------------------
 
-As a requirement, poc needs the official OwnCloud Python module installed:
+poc was developed and tested with Python 2.7.12 and Python 3.5.2.
+
+As a requirement, poc needs the official OwnCloud Python module:
 
 `pip install --user pyocclient`
 
@@ -59,7 +60,7 @@ Functionality examples (optional arguments are given in parentheses)
 
   `poc put --destination=temp file1 file2 file3`
 
-* download single file from OwnCloud directory to the current working directory
+* download single file from OwnCloud to the current working directory
 
   `poc get file1`
 

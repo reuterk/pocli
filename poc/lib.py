@@ -42,7 +42,7 @@ def _get_pocrc():
 
 """Construct ownCloud client based on the configuration file."""
 def _client():
-    if os.environ.has_key('OC_PASSWORD'):
+    if 'OC_PASSWORD' in os.environ:
         password = os.environ['OC_PASSWORD']
     else:
         password = getpass.getpass()
