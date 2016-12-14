@@ -156,8 +156,8 @@ Example:
     # TODO: Support uploading multiple objects at the same time like cp?
     def put(self):
         parser = argparse.ArgumentParser(description='Upload file or directory to server')
-        parser.add_argument('-r', '--recursive', action='store_true',
-                            default=False, help='Recursively upload directory')
+        # parser.add_argument('-r', '--recursive', action='store_true',
+        #                     default=False, help='Recursively upload directory')
         parser.add_argument('source', help='Local source')
         parser.add_argument('destination', help='Remote destination')
         args = parser.parse_args(sys.argv[2:])
@@ -165,14 +165,15 @@ Example:
         if os.path.isfile(args.source):
             client.put_file(args.destination, args.source)
         elif os.path.isdir(args.source):
-            if not args.recursive:
-                raise CLIError("Source is a directory, but recursive flag is not set.")
-            else:
-                client.put_directory(args.destination, args.source)
+            raise CLIError("Source is a directory.")
+            # if not args.recursive:
+            #     raise CLIError("Source is a directory, but recursive flag is not set.")
+            # else:
+            #     client.put_directory(args.destination, args.source)
         elif not os.path.exists(args.source):
             raise CLIError("Source does not exist.")
         else:
-            raise CLIError("Source is is not a normal file.")
+            raise CLIError("Source is is not a regular file.")
         client.logout()
 
 
