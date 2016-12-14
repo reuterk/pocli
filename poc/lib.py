@@ -1,4 +1,6 @@
 """poc library and basic methods
+
+Initial version based on "pyocclient.py" by Florian Kaiser.
 """
 
 
