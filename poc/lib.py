@@ -7,7 +7,8 @@ Initial version based on "pyocclient.py" by Florian Kaiser.
 import os
 import sys
 import math
-import yaml
+#import yaml
+import json
 import time
 import locale
 import argparse
@@ -49,7 +50,8 @@ def _client():
     config = {}
     rcfile = _get_pocrc()
     with open(rcfile, 'r') as fp:
-        config = yaml.load(fp)
+        #config = yaml.load(fp)
+        config = json.loads( fp.read() )
     config['OC_PASSWORD'] = password
     client = owncloud.Client(config['OC_SERVER'], debug=config['OC_DEBUG'])
     client.login(config['OC_USER'], config['OC_PASSWORD'])
@@ -95,7 +97,8 @@ def _init_pocrc():
     config['OC_DEBUG'] = False
     rcfile = _get_pocrc()
     with open(rcfile, 'w') as fp:
-        yaml.dump(config, fp, default_flow_style=False)
+        #yaml.dump(config, fp, default_flow_style=False)
+        fp.write( json.dumps(config, sort_keys=True, indent=4, separators=(',', ': ')) )
     print("created config file: " + rcfile)
 
 
