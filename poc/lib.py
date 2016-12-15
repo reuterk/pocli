@@ -91,8 +91,7 @@ def _print_file_list(l):
 def _query_yes_no(question, default="yes"):
     """Ask a yes/no question via raw_input() and return their answer.
     """
-    valid = {"yes":"yes",   "y":"yes",  "ye":"yes",
-             "no":"no",     "n":"no"}
+    valid = {"yes":"yes", "y":"yes", "ye":"yes", "no":"no", "n":"no"}
     if default == None:
         prompt = " [y/n] "
     elif default == "yes":
@@ -109,8 +108,7 @@ def _query_yes_no(question, default="yes"):
         elif choice in valid.keys():
             return valid[choice]
         else:
-            sys.stdout.write("Please respond with 'yes' or 'no' "\
-                             "(or 'y' or 'n').\n")
+            sys.stdout.write("Please respond with 'yes' or 'no' (or 'y' or 'n').\n")
 
 
 # --- routines called by the cli interface (cli.py) below ---
