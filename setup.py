@@ -1,4 +1,4 @@
-"""
+"""poc setup script
 """
 
 from setuptools import setup
@@ -9,7 +9,7 @@ entry_points = {
 
 setup(name='poc',
       version='0.1',
-      description='Python based command line client for OwnCloud',
+      description='Python-based minimal command line interface for OwnCloud',
       author='Florian Kaiser, Klaus Reuter',
       author_email='khr@mpcdf.mpg.de',
       packages=['poc'],

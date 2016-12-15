@@ -13,32 +13,28 @@ import time
 import locale
 import argparse
 import owncloud
-import datetime
 import getpass
 
 
 __version__ = 0.1
 
 
-class CLIError(Exception):
-    '''Generic CLIError to raise and log different fatal errors.'''
-    def __init__(self, msg):
-        super(CLIError).__init__(type(self))
-        self.msg = "E: %s" % msg
-    def __str__(self):
-        return self.msg
-    def __unicode__(self):
-        return self.msg
-
-
-def _get_timestamp():
-    return '{:%Y%m%d%H%M%S}'.format(datetime.datetime.now())
-
-
-def _get_pocrc():
+def get_pocrc():
     home = os.path.expanduser('~')
     rcfile = os.path.join(home, '.pocrc')
     return rcfile
+
+
+def init_pocrc():
+    config = {}
+    config['OC_USER'] = getpass.getuser()
+    config['OC_SERVER'] = "https://datashare.mpcdf.mpg.de"
+    config['OC_DEBUG'] = False
+    rcfile = get_pocrc()
+    with open(rcfile, 'w') as fp:
+        #yaml.dump(config, fp, default_flow_style=False)
+        fp.write( json.dumps(config, sort_keys=True, indent=4, separators=(',', ': ')) )
+    print("created config file: " + rcfile)
 
 
 """Construct ownCloud client based on the configuration file."""
@@ -48,7 +44,7 @@ def _client():
     else:
         password = getpass.getpass()
     config = {}
-    rcfile = _get_pocrc()
+    rcfile = get_pocrc()
     with open(rcfile, 'r') as fp:
         #config = yaml.load(fp)
         config = json.loads( fp.read() )
@@ -90,34 +86,49 @@ def _print_file_list(l):
         print(file_info_str(x))
 
 
-def _init_pocrc():
-    config = {}
-    config['OC_USER'] = getpass.getuser()
-    config['OC_SERVER'] = "https://datashare.mpcdf.mpg.de"
-    config['OC_DEBUG'] = False
-    rcfile = _get_pocrc()
-    with open(rcfile, 'w') as fp:
-        #yaml.dump(config, fp, default_flow_style=False)
-        fp.write( json.dumps(config, sort_keys=True, indent=4, separators=(',', ': ')) )
-    print("created config file: " + rcfile)
+# Code snippet adapted from:
+# https://code.activestate.com/recipes/577058-query-yesno/
+def _query_yes_no(question, default="yes"):
+    """Ask a yes/no question via raw_input() and return their answer.
+    """
+    valid = {"yes":"yes",   "y":"yes",  "ye":"yes",
+             "no":"no",     "n":"no"}
+    if default == None:
+        prompt = " [y/n] "
+    elif default == "yes":
+        prompt = " [Y/n] "
+    elif default == "no":
+        prompt = " [y/N] "
+    else:
+        raise ValueError("invalid default answer: '%s'" % default)
+    while 1:
+        sys.stdout.write(question + prompt)
+        choice = raw_input().lower()
+        if default is not None and choice == '':
+            return default
+        elif choice in valid.keys():
+            return valid[choice]
+        else:
+            sys.stdout.write("Please respond with 'yes' or 'no' "\
+                             "(or 'y' or 'n').\n")
 
 
 # --- routines called by the cli interface (cli.py) below ---
 
 
 def put(argparse_args):
-    if (argparse_args.destination):
-        destination = argparse_args.destination
+    if (argparse_args.directory):
+        directory = argparse_args.directory
     else:
-        destination = '/'
+        directory = '/'
     args = vars(argparse_args)
     file_list = args['files']
     if (len(file_list) > 0):
         client = _client()
         try:
-            lst = client.list(destination)
+            lst = client.list(directory)
         except:
-            print("remote directory \"%s\" is not accessible" % destination)
+            print("remote directory `%s' is not accessible" % directory)
         else:
             for file in file_list:
                 if os.path.isfile(file):
@@ -126,7 +137,7 @@ def put(argparse_args):
                     if (size_mb > 100.0):
                         print("%s : large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
                     t0 = time.time()
-                    client.put_file(os.path.join(destination, file_basename), file)
+                    client.put_file(os.path.join(directory, file_basename), file)
                     t1 = time.time()
                     dt = t1 - t0
                     print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
@@ -138,17 +149,17 @@ def put(argparse_args):
 
 
 def get(argparse_args):
-    if (argparse_args.destination):
-        destination = argparse_args.destination
+    if (argparse_args.directory):
+        directory = argparse_args.directory
     else:
-        destination = '.'
+        directory = '.'
     args = vars(argparse_args)
     file_list = args['files']
-    if os.path.isdir(destination):
+    if os.path.isdir(directory):
         client = _client()
         for file in file_list:
             file_basename = os.path.basename(file)
-            file_target = os.path.join(destination, file_basename)
+            file_target = os.path.join(directory, file_basename)
             t0 = time.time()
             client.get_file(file, file_target)
             t1 = time.time()
@@ -157,7 +168,7 @@ def get(argparse_args):
             print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
         client.logout()
     else:
-        print("invalid destination")
+        print("invalid directory")
 
 
 def ls(argparse_args):
@@ -170,10 +181,29 @@ def ls(argparse_args):
         try:
             lst = client.list(dir)
         except:
-            print("remote directory \"%s\" is not accessible" % dir)
+            print("remote directory `%s' is not accessible" % dir)
         else:
             _print_file_list(lst)
     client.logout()
+
+
+def rm(argparse_args):
+    args = vars(argparse_args)
+    file_list = args['file']
+    if (len(file_list) > 0):
+        client = _client()
+        for file in file_list:
+            try:
+                client.list(file)
+            except:
+                print("remote object `%s' is not accessible" % file)
+            else:
+                answer = _query_yes_no("remove remote object `%s'?" % file)
+                if answer is "yes":
+                    client.delete(file)
+        client.logout()
+    else:
+        print("nothing to do")
 
 
 def mkdir(argparse_args):
@@ -195,7 +225,3 @@ def check(argparse_args):
         raise
     else:
         print("OK!")
-
-
-def init(argparse_args):
-    _init_pocrc()

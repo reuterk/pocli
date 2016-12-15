@@ -36,11 +36,7 @@ Functionality examples (optional arguments are given in parentheses)
 
   `poc command --help`
 
-* initialize configuration, create "~/.pocrc", defaulting to MPCDF
-
-  `poc init`
-
-* check if the configuration actually works
+* check if a connection to the server can be established successfully
 
   `poc check`
 
@@ -68,14 +64,19 @@ Functionality examples (optional arguments are given in parentheses)
 
   `poc get --destination=temp file1 file2 file3`
 
+* remove remote file(s)
+
+  `poc rm file1 file2`
 
 
 Under the hood
 --------------
 
-In any case a client (== connection) needs to be created.  This requires a valid
-configuration.  The configuration file is located at "~/.pocrc".
-No credentials are ever stored in "~/.pocrc".
+The connection to an OwnCloud instance requires a valid
+configuration. The configuration file is located at "~/.pocrc" and created at
+the first invocation of the `poc` command. The default configuration is for
+the MPCDF datashare service, however, it can be configured freely to connect to
+other OwnCloud instances.  No credentials are ever stored in "~/.pocrc".
 
 
 Credentials and security considerations
@@ -90,7 +91,6 @@ prevent the plain text password from showing up in the shell history.  Support
 for other shells may follow later.  When using OC_PASSWORD, close the shell as
 soon as possible after the file transfer operations have been done.
 Execute the commands `source pocpasswd.bash`  followed by `pocpasswd`.
-
 
 In case the environment variable OC_PASSWORD is not set the `poc` command asks
 for the password at every invocation.

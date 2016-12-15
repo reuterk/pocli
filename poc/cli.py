@@ -2,6 +2,7 @@
 """
 
 
+import os
 from . import lib
 
 
@@ -16,13 +17,13 @@ def parse_args():
         'put', help='upload file(s)')
     # parser_put.add_argument('--input', type=str, help='input parameter file')
     parser_put.set_defaults(func=lib.put)
-    parser_put.add_argument('--destination', '-d', type=str, help='remote destination directory')
+    parser_put.add_argument('--directory', '-d', type=str, help='remote directory')
     parser_put.add_argument('files', nargs=argparse.REMAINDER, help='local file(s)')
     # ---
     parser_get = subparsers.add_parser(
         'get', help='download file(s)')
     parser_get.set_defaults(func=lib.get)
-    parser_get.add_argument('--destination', '-d', type=str, help='local destination directory')
+    parser_get.add_argument('--directory', '-d', type=str, help='local directory')
     parser_get.add_argument('files', nargs=argparse.REMAINDER, help='remote file(s)')
     # ---
     parser_ls = subparsers.add_parser(
@@ -30,23 +31,26 @@ def parse_args():
     parser_ls.set_defaults(func=lib.ls)
     parser_ls.add_argument('dir', nargs=argparse.REMAINDER, help='remote directory')
     # ---
+    parser_rm = subparsers.add_parser(
+        'rm', help='delete remote file')
+    parser_rm.set_defaults(func=lib.rm)
+    parser_rm.add_argument('file', nargs=argparse.REMAINDER, help='remote file')
+    # ---
     parser_mkdir = subparsers.add_parser(
         'mkdir', help='create remote directory')
     parser_mkdir.set_defaults(func=lib.mkdir)
     parser_mkdir.add_argument('dir', nargs=argparse.REMAINDER, help='remote directory')
     # ---
     parser_check = subparsers.add_parser(
-        'check', help='check if current OwnCloud configuration works')
+        'check', help='check current configuration')
     parser_check.set_defaults(func=lib.check)
-    # ---
-    parser_init = subparsers.add_parser(
-        'init', help='initialize .pocrc config file')
-    parser_init.set_defaults(func=lib.init)
     # ---
     return parser.parse_args()
 
 
 def main():
+    if not os.path.isfile( lib.get_pocrc() ):
+        lib.init_pocrc()
     args = parse_args()
     args.func(args)
 
