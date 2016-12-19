@@ -60,11 +60,11 @@ basic usage:
 
   `poc mkdir temp`
 
-* upload single file to OwnCloud root directory
+* upload single file to the OwnCloud root directory
 
   `poc put file1`
 
-* upload multiple files to OwnCloud "temp" directory
+* upload multiple files to the OwnCloud "temp" directory
 
   `poc put --destination=temp file1 file2 file3`
 
