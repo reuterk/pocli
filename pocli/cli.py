@@ -1,4 +1,4 @@
-"""poc command line entry point
+"""pocli command line entry point
 """
 
 

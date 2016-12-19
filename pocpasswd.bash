@@ -1,6 +1,6 @@
 # Helper function to allow to set the password for poc as environment variable
-# without having it appear in bash history.
-# Source ("source") this file into your bash session and then call `pocpasswd`.
+# without having it appear in bash history.  Source ("source pocpasswd.bash")
+# this file into your bash session, and call `pocpasswd`.
 
 function pocpasswd() {
     echo -n "OwnCloud password (will not be echoed/visible): "

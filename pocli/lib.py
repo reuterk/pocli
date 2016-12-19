@@ -1,13 +1,12 @@
-"""poc library and basic methods
+"""pocli library and basic methods
 
-Initial version based on "pyocclient.py" by Florian Kaiser.
+Initial version based on the program "pyocclient.py" by Florian Kaiser.
 """
 
 
 import os
 import sys
 import math
-#import yaml
 import json
 import time
 import locale
@@ -32,7 +31,6 @@ def init_pocrc():
     config['OC_DEBUG'] = False
     rcfile = get_pocrc()
     with open(rcfile, 'w') as fp:
-        #yaml.dump(config, fp, default_flow_style=False)
         fp.write( json.dumps(config, sort_keys=True, indent=4, separators=(',', ': ')) )
     print("created config file: " + rcfile)
 
@@ -46,7 +44,6 @@ def _client():
     config = {}
     rcfile = get_pocrc()
     with open(rcfile, 'r') as fp:
-        #config = yaml.load(fp)
         config = json.loads( fp.read() )
     config['OC_PASSWORD'] = password
     client = owncloud.Client(config['OC_SERVER'], debug=config['OC_DEBUG'])
