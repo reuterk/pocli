@@ -37,7 +37,7 @@ case this flag is omitted, system-wide locations are chosen.
 Functionality examples (optional arguments are given in parentheses)
 --------------------------------------------------------------------
 
-The pocli package provides the single `oc` command.  It takes positional and
+The pocli package provides the `oc` command.  It takes positional and
 named arguments in analogy to e.g. `git`.  The following examples illustrate the
 basic usage:
 
@@ -108,4 +108,4 @@ the shell as soon as possible after the file transfer operations have been
 done.
 
 In case the environment variable OC\_PASSWORD is not set the `oc` command asks
-for the password at every invocation.
+for the password at each invocation.
