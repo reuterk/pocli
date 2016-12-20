@@ -23,7 +23,7 @@ class CleanCommand(Command):
         os.system("find pocli -name '*.pyc' -delete -print")
 
 entry_points = {
-    'console_scripts': ['poc=pocli.cli:main']
+    'console_scripts': ['oc=pocli.cli:main']
 }
 
 setup(name='pocli',

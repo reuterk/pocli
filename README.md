@@ -36,49 +36,49 @@ case this flag is omitted, system-wide locations are chosen.
 Functionality examples (optional arguments are given in parentheses)
 --------------------------------------------------------------------
 
-The pocli package provides the single `poc` command.  It takes positional and
+The pocli package provides the single `oc` command.  It takes positional and
 named arguments in analogy to `git`.  The following examples illustrate the
 basic usage:
 
 * basic help
 
-  `poc --help`
+  `oc --help`
 
 * command-specific help
 
-  `poc command --help`
+  `oc command --help`
 
 * list remote files and folders, defaults to "/"
 
-  `poc ls <remote_folder>`
+  `oc ls <remote_folder>`
 
 * create remote directory "temp"
 
-  `poc mkdir temp`
+  `oc mkdir temp`
 
 * upload single file to the OwnCloud root directory
 
-  `poc put file1`
+  `oc put file1`
 
 * upload multiple files to the OwnCloud "temp" directory
 
-  `poc put --directory=temp file1 file2 file3`
+  `oc put --directory=temp file1 file2 file3`
 
 * download single file from OwnCloud to the current working directory
 
-  `poc get file1`
+  `oc get file1`
 
 * download multiple files to the local "temp" directory
 
-  `poc get --directory=temp file1 file2 file3`
+  `oc get --directory=temp file1 file2 file3`
 
 * remove remote file(s)
 
-  `poc rm file1 file2`
+  `oc rm file1 file2`
 
 * check if a connection to the server can be established successfully based on the present configuration
 
-  `poc check`
+  `oc check`
 
 
 
@@ -87,7 +87,7 @@ Under the hood
 
 The connection to an OwnCloud instance requires a valid configuration. The
 configuration file in JSON format is located at "~/.pocrc" and created at the
-first invocation of the `poc` command. The default configuration is for the
+first invocation of the `oc` command. The default configuration is for the
 MPCDF datashare service, however, it can be configured freely to connect to
 other OwnCloud instances.  No credentials are ever stored in "~/.pocrc".
 
@@ -99,12 +99,12 @@ Security concerns arise, in particular if the OwnCloud password is identical to
 the password used for other services at the same site.
 
 The environment variable OC\_PASSWORD may be set to a valid password, for
-security reasons using the `pocpasswd` bash function from `pocpasswd.sh` in
+security reasons using the `ocpasswd` bash function from `ocpasswd.sh` in
 order to prevent the plain text password from showing up in the shell history.
-Execute the commands `source pocpasswd.bash`  followed by `pocpasswd`.  Support
+Execute the commands `source ocpasswd.bash`  followed by `ocpasswd`.  Support
 for other shells may follow later.  When using OC\_PASSWORD, unset it or close
 the shell as soon as possible after the file transfer operations have been
 done.
 
-In case the environment variable OC\_PASSWORD is not set the `poc` command asks
+In case the environment variable OC\_PASSWORD is not set the `oc` command asks
 for the password at every invocation.
