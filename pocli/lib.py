@@ -1,4 +1,7 @@
-"""pocli library and basic methods
+"""pocli -- library and basic methods
+
+Copyright (c) 2016, 2017
+Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
 
 Initial version based on the program "pyocclient.py" by Florian Kaiser.
 """
@@ -130,12 +133,12 @@ def put(argparse_args):
                     size_mb = float(os.path.getsize(file))/float(1024*1024)
                     file_basename = os.path.basename(file)
                     if (size_mb > 100.0):
-                        print("%s : large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
+                        print("%s: large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
                     t0 = time.time()
                     client.put_file(os.path.join(directory, file_basename), file)
                     t1 = time.time()
                     dt = t1 - t0
-                    print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
+                    print("%s: OK (%.2f MB/s)" % (file_basename, size_mb/dt))
                 else:
                     print("%s is not a regular file" % file)
         client.logout()
@@ -160,7 +163,7 @@ def get(argparse_args):
             t1 = time.time()
             dt = t1 - t0
             size_mb = float(os.path.getsize(file_target))/float(1024*1024)
-            print("%s : OK (%.2f MB/s)" % (file_basename, size_mb/dt))
+            print("%s: OK (%.2f MB/s)" % (file_basename, size_mb/dt))
         client.logout()
     else:
         print("invalid directory")

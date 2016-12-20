@@ -1,4 +1,7 @@
-"""pocli (Python OwnCloud Client) setup script
+"""pocli (Python OwnCloud Client) -- setup script
+
+Copyright (c) 2016, 2017
+Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
 """
 
 import os
@@ -17,7 +20,7 @@ class CleanCommand(Command):
         os.system('rm -vrf dist')
         os.system('rm -vrf pocli.egg-info')
         os.system('rm -vrf pocli/__pycache__')
-        os.system("find . -name '*.pyc' -delete -print")
+        os.system("find pocli -name '*.pyc' -delete -print")
 
 entry_points = {
     'console_scripts': ['poc=pocli.cli:main']
@@ -25,7 +28,7 @@ entry_points = {
 
 setup(name='pocli',
       version='0.1',
-      description='Python-based minimal command-line client for OwnCloud',
+      description='Python-based command-line client for OwnCloud',
       author='Florian Kaiser, Klaus Reuter',
       author_email='khr@rzg.mpg.de',
       packages=['pocli'],

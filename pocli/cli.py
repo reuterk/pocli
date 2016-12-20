@@ -1,4 +1,7 @@
-"""pocli command line entry point
+"""pocli -- command line interface
+
+Copyright (c) 2016, 2017
+Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
 """
 
 
