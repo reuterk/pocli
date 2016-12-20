@@ -11,7 +11,8 @@ Introduction
 
 The pocli package provides a lightweight OwnCloud command line client for basic
 file operations such as upload, download, directory creation and listing, and
-deletion.  It is built upon the official pyocclient package.
+deletion.  It is written in Python and built upon the official pyocclient
+package.
 
 
 Requirements and installation
@@ -37,7 +38,7 @@ Functionality examples (optional arguments are given in parentheses)
 --------------------------------------------------------------------
 
 The pocli package provides the single `oc` command.  It takes positional and
-named arguments in analogy to `git`.  The following examples illustrate the
+named arguments in analogy to e.g. `git`.  The following examples illustrate the
 basic usage:
 
 * basic help
@@ -86,10 +87,10 @@ Under the hood
 --------------
 
 The connection to an OwnCloud instance requires a valid configuration. The
-configuration file in JSON format is located at "~/.pocrc" and created at the
+configuration file in JSON format is located at "~/.ocrc" and created at the
 first invocation of the `oc` command. The default configuration is for the
 MPCDF datashare service, however, it can be configured freely to connect to
-other OwnCloud instances.  No credentials are ever stored in "~/.pocrc".
+other OwnCloud instances.  No credentials are ever stored in "~/.ocrc".
 
 
 Credentials and security considerations

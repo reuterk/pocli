@@ -52,8 +52,8 @@ def parse_args():
 
 
 def main():
-    if not os.path.isfile( lib.get_pocrc() ):
-        lib.init_pocrc()
+    if not os.path.isfile( lib.get_ocrc() ):
+        lib.init_ocrc()
     args = parse_args()
     args.func(args)
 

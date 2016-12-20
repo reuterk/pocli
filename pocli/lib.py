@@ -21,18 +21,18 @@ import getpass
 __version__ = 0.1
 
 
-def get_pocrc():
+def get_ocrc():
     home = os.path.expanduser('~')
-    rcfile = os.path.join(home, '.pocrc')
+    rcfile = os.path.join(home, '.ocrc')
     return rcfile
 
 
-def init_pocrc():
+def init_ocrc():
     config = {}
     config['OC_USER'] = getpass.getuser()
     config['OC_SERVER'] = "https://datashare.mpcdf.mpg.de"
     config['OC_DEBUG'] = False
-    rcfile = get_pocrc()
+    rcfile = get_ocrc()
     with open(rcfile, 'w') as fp:
         fp.write( json.dumps(config, sort_keys=True, indent=4, separators=(',', ': ')) )
     print("created config file: " + rcfile)
@@ -45,7 +45,7 @@ def _client():
     else:
         password = getpass.getpass()
     config = {}
-    rcfile = get_pocrc()
+    rcfile = get_ocrc()
     with open(rcfile, 'r') as fp:
         config = json.loads( fp.read() )
     config['OC_PASSWORD'] = password
