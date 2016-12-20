@@ -4,6 +4,8 @@ Python OwnCloud Client (pocli)
 
 Copyright (c) 2016, 2017
 Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
+https://gitlab.rzg.mpg.de/khr/poc
+Released under the MIT License (MIT), see the LICENSE file.
 
 
 Introduction
@@ -24,9 +26,15 @@ As a requirement, pocli needs the official OwnCloud Python module:
 
 `pip install --user pyocclient`
 
-The pocli package itself can be installed in the standard way:
+The pocli package itself can be installed in the standard way from the source
+distribution:
 
 `python setup.py install --user`
+
+Alternatively the package including its dependencies can be installed easily
+via pip:
+
+`pip install --user pocli`
 
 Make sure to add the installation directory to the PATH environment variable,
 on a Unix system this is for example "~/.local/bin".  The previous examples
@@ -96,7 +104,7 @@ other OwnCloud instances.  No credentials are ever stored in "~/.ocrc".
 Credentials and security considerations
 ---------------------------------------
 
-Security concerns arise, in particular if the OwnCloud password is identical to
+Security concerns arise in particular if the OwnCloud password is identical to
 the password used for other services at the same site.
 
 The environment variable OC\_PASSWORD may be set to a valid password, for
