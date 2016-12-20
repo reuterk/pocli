@@ -48,10 +48,6 @@ basic usage:
 
   `poc command --help`
 
-* check if a connection to the server can be established successfully
-
-  `poc check`
-
 * list remote files and folders, defaults to "/"
 
   `poc ls <remote_folder>`
@@ -66,7 +62,7 @@ basic usage:
 
 * upload multiple files to the OwnCloud "temp" directory
 
-  `poc put --destination=temp file1 file2 file3`
+  `poc put --directory=temp file1 file2 file3`
 
 * download single file from OwnCloud to the current working directory
 
@@ -74,11 +70,16 @@ basic usage:
 
 * download multiple files to the local "temp" directory
 
-  `poc get --destination=temp file1 file2 file3`
+  `poc get --directory=temp file1 file2 file3`
 
 * remove remote file(s)
 
   `poc rm file1 file2`
+
+* check if a connection to the server can be established successfully based on the present configuration
+
+  `poc check`
+
 
 
 Under the hood
