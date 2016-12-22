@@ -26,11 +26,15 @@ entry_points = {
     'console_scripts': ['oc=pocli.cli:main']
 }
 
+with open('README.rst') as fp:
+    long_description = fp.read()
+
 setup(name='pocli',
-      version='0.1',
+      version='0.1.2',
       description='Python-based command-line client for OwnCloud',
+      long_description=long_description,
       author='Florian Kaiser, Klaus Reuter',
-      author_email='khr@rzg.mpg.de',
+      author_email='klaus.reuter@gmail.com',
       packages=['pocli'],
       install_requires=['requests', 'pyocclient'],
       cmdclass={'clean': CleanCommand},

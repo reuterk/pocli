@@ -1,10 +1,11 @@
 Python OwnCloud Client (pocli)
 ==============================
 
-Copyright (c) 2016, 2017 Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter
-(khr@rzg.mpg.de)
+Copyright (c) 2016, 2017 Florian Kaiser, Klaus Reuter
 
 https://gitlab.rzg.mpg.de/khr/poc
+
+https://pypi.python.org/pypi/pocli
 
 Released under the MIT License (MIT), see the LICENSE file.
 
