@@ -106,13 +106,13 @@ Credentials and security considerations
 Security concerns arise in particular if the OwnCloud password is
 identical to the password used for other services at the same site.
 
-The environment variable OC\_PASSWORD may be set to a valid password,
-for security reasons using the ``ocpasswd`` bash function from
-``ocpasswd.sh`` in order to prevent the plain text password from showing
-up in the shell history. Execute the commands ``source ocpasswd.bash``
-followed by ``ocpasswd``. Support for other shells may follow later.
-When using OC\_PASSWORD, unset it or close the shell as soon as possible
-after the file transfer operations have been done.
+The environment variable OC\_PASSWORD may be set to a valid password.  Bash
+users should use for security reasons the ``ocpasswd`` bash function from
+``ocpasswd.sh`` in order to prevent the plain text password from showing up in
+the shell history. Execute the commands ``source ocpasswd.bash`` followed by
+``ocpasswd``. Support for other shells may follow later. When using
+OC\_PASSWORD, unset it or close the shell as soon as possible after the file
+transfer operations have been done.
 
 In case the environment variable OC\_PASSWORD is not set the ``oc``
 command asks for the password at each invocation.

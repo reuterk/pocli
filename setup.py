@@ -39,4 +39,5 @@ setup(name='pocli',
       install_requires=['requests', 'pyocclient'],
       cmdclass={'clean': CleanCommand},
       entry_points=entry_points,
+      scripts=['ocpasswd.bash'],
       zip_safe=False)
