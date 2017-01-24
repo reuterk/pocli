@@ -18,9 +18,6 @@ import getpass
 import owncloud
 
 
-__version__ = 0.1.4
-
-
 def get_ocrc():
     home = os.path.expanduser('~')
     rcfile = os.path.join(home, '.ocrc')
