@@ -14,11 +14,11 @@ import json
 import time
 import locale
 import argparse
-import owncloud
 import getpass
+import owncloud
 
 
-__version__ = 0.1
+__version__ = 0.1.4
 
 
 def get_ocrc():
@@ -56,7 +56,7 @@ def _client():
 
 def _filesizeformat(value):
     """
-    Converts an integer representing the size of a file-like object
+    Converts an integer representing of the size of a file-like object
     in bytes into human readable form (i.e. 13 KB, 4.1 MB, etc).
     """
     _FILESIZE_BASE = 1024
@@ -126,24 +126,22 @@ def put(argparse_args):
         try:
             lst = client.list(directory)
         except:
-            print("remote directory `%s' is not accessible" % directory)
+            print("`%s': remote directory is not accessible" % directory)
         else:
-            for file in file_list:
-                if os.path.isfile(file):
-                    size_mb = float(os.path.getsize(file))/float(1024*1024)
-                    file_basename = os.path.basename(file)
+            for file_name in file_list:
+                if os.path.isfile(file_name):
+                    size_mb = float(os.path.getsize(file_name))/float(1024*1024)
+                    file_basename = os.path.basename(file_name)
                     if (size_mb > 100.0):
-                        print("%s: large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
+                        print("`%s': large file detected (%.2f MB), transfer may take some time ..." % (file_basename, size_mb))
                     t0 = time.time()
-                    client.put_file(os.path.join(directory, file_basename), file)
+                    client.put_file(os.path.join(directory, file_basename), file_name)
                     t1 = time.time()
                     dt = t1 - t0
-                    print("%s: OK (%.2f MB/s)" % (file_basename, size_mb/dt))
+                    print("`%s': OK (%.2f MB/s)" % (file_basename, size_mb/dt))
                 else:
-                    print("%s is not a regular file" % file)
+                    print("`%s': skipping, not a regular file" % file_name)
         client.logout()
-    else:
-        print("nothing to do")
 
 
 def get(argparse_args):
@@ -153,20 +151,34 @@ def get(argparse_args):
         directory = '.'
     args = vars(argparse_args)
     file_list = args['files']
-    if os.path.isdir(directory):
-        client = _client()
-        for file in file_list:
-            file_basename = os.path.basename(file)
-            file_target = os.path.join(directory, file_basename)
-            t0 = time.time()
-            client.get_file(file, file_target)
-            t1 = time.time()
-            dt = t1 - t0
-            size_mb = float(os.path.getsize(file_target))/float(1024*1024)
-            print("%s: OK (%.2f MB/s)" % (file_basename, size_mb/dt))
-        client.logout()
-    else:
-        print("invalid directory")
+    if (len(file_list) > 0):
+        if os.path.isdir(directory):
+            client = _client()
+            for file_name in file_list:
+                try:
+                    file_info = client.file_info(file_name)
+                except:
+                    print("`%s': remote object is not accessible" % (file_name,))
+                    continue
+                else:
+                    if file_info.is_dir():
+                        print("`%s': skipping, download of remote directories is not supported" % (file_name,))
+                        continue
+                    else:
+                        file_size_mb = float(file_info.get_size())/float(1024*1024)
+                        file_basename = os.path.basename(file_name)
+                        if (file_size_mb > 100.0):
+                            print("`%s': large file detected (%.2f MB), transfer may take some time ..." % (file_basename, file_size_mb))
+                        file_target = os.path.join(directory, file_basename)
+                        t0 = time.time()
+                        client.get_file(file_name, file_target)
+                        t1 = time.time()
+                        dt = t1 - t0
+                        size_mb = float(os.path.getsize(file_target))/float(1024*1024)
+                        print("`%s': OK (%.2f MB/s)" % (file_basename, size_mb/dt))
+            client.logout()
+        else:
+            print("`%s': invalid local directory" % directory)
 
 
 def ls(argparse_args):
@@ -175,11 +187,11 @@ def ls(argparse_args):
     if (len(directory_list) == 0):
         directory_list.append('/')
     client = _client()
-    for dir in directory_list:
+    for directory in directory_list:
         try:
-            lst = client.list(dir)
+            lst = client.list(directory)
         except:
-            print("remote directory `%s' is not accessible" % dir)
+            print("`%s': remote directory is not accessible" % directory)
         else:
             _print_file_list(lst)
     client.logout()
@@ -190,18 +202,16 @@ def rm(argparse_args):
     file_list = args['file']
     if (len(file_list) > 0):
         client = _client()
-        for file in file_list:
+        for file_name in file_list:
             try:
-                client.list(file)
+                client.list(file_name)
             except:
-                print("remote object `%s' is not accessible" % file)
+                print("`%s': remote object is not accessible" % file_name)
             else:
-                answer = _query_yes_no("remove remote object `%s'?" % file)
+                answer = _query_yes_no("`%s': remove remote object?" % file_name)
                 if answer is "yes":
-                    client.delete(file)
+                    client.delete(file_name)
         client.logout()
-    else:
-        print("nothing to do")
 
 
 def mkdir(argparse_args):
@@ -209,11 +219,9 @@ def mkdir(argparse_args):
     directory_list = args['dir']
     if (len(directory_list) > 0):
         client = _client()
-        for dir in directory_list:
-            client.mkdir(dir)
+        for directory in directory_list:
+            client.mkdir(directory)
         client.logout()
-    else:
-        print("nothing to do")
 
 
 def check(argparse_args):

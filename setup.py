@@ -30,7 +30,7 @@ with open('README.rst') as fp:
     long_description = fp.read()
 
 setup(name='pocli',
-      version='0.1.3',
+      version='0.1.4',
       description='Python-based command-line client for OwnCloud',
       long_description=long_description,
       author='Florian Kaiser, Klaus Reuter',
