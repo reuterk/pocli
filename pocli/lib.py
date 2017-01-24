@@ -203,7 +203,7 @@ def rm(argparse_args):
             try:
                 client.list(file_name)
             except:
-                print("`%s': remote object is not accessible" % file_name)
+                print("`%s': no such remote object" % file_name)
             else:
                 answer = _query_yes_no("`%s': remove remote object?" % file_name)
                 if answer is "yes":

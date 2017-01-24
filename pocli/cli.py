@@ -35,7 +35,7 @@ def parse_args():
     parser_ls.add_argument('dir', nargs=argparse.REMAINDER, help='remote directory')
     # ---
     parser_rm = subparsers.add_parser(
-        'rm', help='delete remote file')
+        'rm', help='delete remote object')
     parser_rm.set_defaults(func=lib.rm)
     parser_rm.add_argument('file', nargs=argparse.REMAINDER, help='remote file')
     # ---
