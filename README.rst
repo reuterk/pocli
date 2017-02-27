@@ -17,6 +17,13 @@ for basic file operations such as upload, download, directory creation
 and listing, and deletion. It is written in Python and built upon the
 official pyocclient package.
 
+The development of pocli was motivated by the need for a tool to quickly up-
+or download single or few files on a computer which is operated without any
+graphical user interface (i.e. a typical HPC system), where it may not be
+desirable to install the official client software.
+
+Note that -- deliberately -- no recursive operations are supported.
+
 Requirements and installation
 -----------------------------
 
@@ -93,12 +100,12 @@ illustrate the basic usage:
 Under the hood
 --------------
 
-The connection to an OwnCloud instance requires a valid configuration.
-The configuration file in JSON format is located at "~/.ocrc" and
-created at the first invocation of the ``oc`` command. The default
-configuration is for the MPCDF datashare service, however, it can be
-configured freely to connect to other OwnCloud instances. No credentials
-are ever stored in "~/.ocrc".
+The connection to an OwnCloud instance requires a valid configuration. The
+configuration file in JSON format is located at "~/.ocrc" and is created at the
+first invocation of the ``oc`` command. The initial default configuration is for
+the MPCDF datashare service, however, it can be configured freely to connect to
+other OwnCloud instances. Simply adapt the configuration file to your needs. No
+credentials are ever stored in "~/.ocrc".
 
 Credentials and security considerations
 ---------------------------------------
@@ -115,4 +122,5 @@ OC\_PASSWORD, unset it or close the shell as soon as possible after the file
 transfer operations have been done.
 
 In case the environment variable OC\_PASSWORD is not set the ``oc``
-command asks for the password at each invocation.
+command asks for the password at each invocation. For security reasons the
+authors recommend this mode of operations.
