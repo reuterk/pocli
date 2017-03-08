@@ -1,4 +1,4 @@
-"""pocli -- library and basic methods
+"""pocli -- function libary
 
 Copyright (c) 2016, 2017
 Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
@@ -47,14 +47,15 @@ def _client():
     The password is read from the environment variable OC_PASSWORD,
     in case this variable is not set the user is prompted interactively.
     """
-    if 'OC_PASSWORD' in os.environ:
-        password = os.environ['OC_PASSWORD']
-    else:
-        password = getpass.getpass()
     config = {}
     rcfile = get_ocrc()
     with open(rcfile, 'r') as fp:
         config = json.loads(fp.read())
+    # for the MPCDF datashare service we forbid the use of OC_PASSWORD
+    if ('datashare.mpcdf.mpg.de' not in config['OC_SERVER']) and ('OC_PASSWORD' in os.environ):
+        password = os.environ['OC_PASSWORD']
+    else:
+        password = getpass.getpass()
     config['OC_PASSWORD'] = password
     client = owncloud.Client(config['OC_SERVER'], debug=config['OC_DEBUG'])
     client.login(config['OC_USER'], config['OC_PASSWORD'])
