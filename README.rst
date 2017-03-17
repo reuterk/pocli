@@ -1,4 +1,4 @@
-Python OwnCloud Client (pocli)
+Python ownCloud Client (pocli)
 ==============================
 
 Copyright (c) 2016, 2017 Florian Kaiser, Klaus Reuter
@@ -12,7 +12,7 @@ Released under the MIT License (MIT), see the LICENSE file.
 Introduction
 ------------
 
-The pocli package provides a lightweight OwnCloud command line client
+The pocli package provides a lightweight ownCloud command line client
 for basic file operations such as upload, download, directory creation
 and listing, and deletion. It is written in Python and built upon the
 official pyocclient package. 
@@ -25,14 +25,14 @@ complex requirements (continuous synchronization), please use the official clien
 
 A typical use case is:
 
-* Upload a tarball from the login node of a HPC system to your OwnCloud server using pocli.
-* Log in to your OwnCloud server from your laptop via the web browser and
+* Upload a tarball from the login node of a HPC system to your ownCloud server using pocli.
+* Log in to your ownCloud server from your laptop via the web browser and
   share the tarball with other users (e.g. by sending a download URL via email).
 
 Another use case would be:
 
-* Upload a tarball from HPC system A to your OwnCloud server using pocli.
-* Download the tarball to HPC system B from your OwnCloud server using pocli.
+* Upload a tarball from HPC system A to your ownCloud server using pocli.
+* Download the tarball to HPC system B from your ownCloud server using pocli.
 
 Note that -- deliberately -- no recursive operations are supported.
 
@@ -47,7 +47,7 @@ The package including its dependencies can be installed easily via pip:
 ``pip install --user pocli``
 
 Alternatively, the package can be installed from the source distribution.
-First, as a requirement, pocli needs the official OwnCloud Python module:
+First, as a requirement, pocli needs the official ownCloud Python module:
 
 ``pip install --user pyocclient``
 
@@ -84,15 +84,15 @@ illustrate the basic usage:
 
 ``oc mkdir temp``
 
--  upload single file to the OwnCloud root directory
+-  upload single file to the ownCloud root directory
 
 ``oc put file1``
 
--  upload multiple files to the OwnCloud "temp" directory
+-  upload multiple files to the ownCloud "temp" directory
 
 ``oc put --directory=temp file1 file2 file3``
 
--  download single file from OwnCloud to the current working directory
+-  download single file from ownCloud to the current working directory
 
 ``oc get file1``
 
@@ -112,17 +112,17 @@ illustrate the basic usage:
 Under the hood
 --------------
 
-The connection to an OwnCloud instance requires a valid configuration. The
+The connection to an ownCloud instance requires a valid configuration. The
 configuration file in JSON format is located at "~/.ocrc" and is created at the
 first invocation of the ``oc`` command. The initial default configuration is for
-the MPCDF datashare service, however, it can be configured freely to connect to
-other OwnCloud instances. Simply adapt the configuration file to your needs. No
+the MPCDF DataShare service, however, it can be configured freely to connect to
+other ownCloud instances. Simply adapt the configuration file to your needs. No
 credentials are ever stored in "~/.ocrc".
 
 Password handling
 -----------------
 
-Security concerns arise in particular if the OwnCloud password is
+Security concerns arise in particular if the ownCloud password is
 identical to the password used for other services at the same site.
 To this end, by default, the ``oc`` executable asks the user to type the
 password at each invocation.
