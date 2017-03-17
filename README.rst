@@ -3,7 +3,7 @@ Python OwnCloud Client (pocli)
 
 Copyright (c) 2016, 2017 Florian Kaiser, Klaus Reuter
 
-https://gitlab.rzg.mpg.de/khr/poc
+https://gitlab.mpcdf.mpg.de/mpcdf/pocli
 
 https://pypi.python.org/pypi/pocli
 
