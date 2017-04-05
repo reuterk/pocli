@@ -52,7 +52,7 @@ def _client():
     with open(rcfile, 'r') as fp:
         config = json.loads(fp.read())
     # for the MPCDF datashare service we forbid the use of OC_PASSWORD
-    if ('datashare.mpcdf.mpg.de' not in config['OC_SERVER']) and ('OC_PASSWORD' in os.environ):
+    if (('datashare.mpcdf.mpg.de' not in config['OC_SERVER']) or ('OC_UNIT_TEST_COOKIE' in os.environ)) and ('OC_PASSWORD' in os.environ):
         password = os.environ['OC_PASSWORD']
     else:
         password = getpass.getpass()
@@ -124,6 +124,7 @@ def _query_yes_no(question, default="yes"):
 
 def put(argparse_args):
     """Upload one or more files to an OwnCloud server."""
+    exit_status = 0
     if (argparse_args.directory):
         directory = argparse_args.directory
     else:
@@ -136,6 +137,7 @@ def put(argparse_args):
             lst = client.list(directory)
         except:
             print("`%s': remote directory does not exist" % directory)
+            exit_status = 1
         else:
             for file_name in file_list:
                 if os.path.isfile(file_name):
@@ -151,10 +153,12 @@ def put(argparse_args):
                 else:
                     print("`%s': skipping, not a regular file" % file_name)
         client.logout()
+    sys.exit(exit_status)
 
 
 def get(argparse_args):
     """Download one or more files from an OwnCloud server."""
+    exit_status = 0
     if (argparse_args.directory):
         directory = argparse_args.directory
     else:
@@ -189,6 +193,8 @@ def get(argparse_args):
             client.logout()
         else:
             print("`%s': invalid local directory" % directory)
+            exit_status = 1
+    sys.exit(exit_status)
 
 
 def ls(argparse_args):
@@ -210,6 +216,11 @@ def ls(argparse_args):
 
 def rm(argparse_args):
     """Remove remote object from OwnCloud server."""
+    exit_status = 0
+    if (argparse_args.yes):
+        confirm = False
+    else:
+        confirm = True
     args = vars(argparse_args)
     file_list = args['file']
     if (len(file_list) > 0):
@@ -219,16 +230,21 @@ def rm(argparse_args):
                 lst = client.list(file_name)
             except:
                 print("`%s': no such remote object" % file_name)
+                exit_status = 1
             else:
                 file_info = client.file_info(file_name)
                 if file_info.is_dir():
                     if (len(lst) > 0):
                         print("`%s': skipping non-empty directory" % file_name)
                         continue
-                answer = _query_yes_no("`%s': remove remote object?" % file_name)
+                if confirm:
+                    answer = _query_yes_no("`%s': remove remote object?" % file_name)
+                else:
+                    answer = "yes"
                 if answer is "yes":
                     client.delete(file_name)
         client.logout()
+    sys.exit(exit_status)
 
 
 def mkdir(argparse_args):
