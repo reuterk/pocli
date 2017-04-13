@@ -239,9 +239,9 @@ def rm(argparse_args):
                         continue
                 if confirm:
                     answer = _query_yes_no("`%s': remove remote object?" % file_name)
+                    if answer is "yes":
+                        client.delete(file_name)
                 else:
-                    answer = "yes"
-                if answer is "yes":
                     client.delete(file_name)
         client.logout()
     sys.exit(exit_status)

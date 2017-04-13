@@ -64,9 +64,10 @@ locations are chosen.
 Functionality examples (optional arguments are given in parentheses)
 --------------------------------------------------------------------
 
-The pocli package provides the ``oc`` command. It takes positional and
-named arguments in analogy to e.g. ``git``. The following examples
-illustrate the basic usage:
+The pocli package provides the ``oc`` command. Moreover, the alias ``ds`` can be
+used interchangeably to comply with the naming of the MPCDF DataShare service.
+It takes positional and named arguments in analogy to e.g. ``git``. The
+following examples illustrate the basic usage:
 
 -  basic help
 

@@ -37,7 +37,7 @@ def parse_args():
     parser_rm = subparsers.add_parser(
         'rm', help='delete remote object')
     parser_rm.set_defaults(func=lib.rm)
-    parser_rm.add_argument('--yes', '-y', type=str, help='assume yes on any confirmation of file deletion')
+    parser_rm.add_argument('--yes', '-y', action='store_true', help='assume yes on any confirmation of file deletion')
     parser_rm.add_argument('file', nargs=argparse.REMAINDER, help='remote file')
     # ---
     parser_mkdir = subparsers.add_parser(

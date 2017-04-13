@@ -8,6 +8,9 @@ set -e
 export OC_UNIT_TEST_COOKIE=ON
 OC_TESTDIR=/tmp/$USER/oc_tests
 
+CMD='ds'
+#CMD='oc'
+
 JUNK_FILE="junk.dat"
 JUNK_DIR="oc_test_directory"
 JUNK_SIZE_MB=16
@@ -30,7 +33,7 @@ function run_test() {
 
 
 echo "Running basic tests of the pocli command line interface." 
-echo Installation: `which oc`
+echo Installation: `which ${CMD}`
 echo "Press enter to continue or Ctrl-c to abort."
 read
 
@@ -44,21 +47,21 @@ cd $OC_TESTDIR
 
 dd if=/dev/zero of=${JUNK_FILE} bs=1M count=${JUNK_SIZE_MB} status=none
 
-run_test "oc --help"
+run_test "${CMD} --help"
 
-run_test "oc check"
-run_test "oc ls"
+run_test "${CMD} check"
+run_test "${CMD} ls"
 
 # upload test file
-run_test "oc mkdir ${JUNK_DIR}"
-run_test "oc put --directory=${JUNK_DIR} ${JUNK_FILE}"
+run_test "${CMD} mkdir ${JUNK_DIR}"
+run_test "${CMD} put --directory=${JUNK_DIR} ${JUNK_FILE}"
 
 # download test file
 mkdir -p ${JUNK_DIR}
-run_test "oc get --directory=${JUNK_DIR} ${JUNK_DIR}/${JUNK_FILE}"
+run_test "${CMD} get --directory=${JUNK_DIR} ${JUNK_DIR}/${JUNK_FILE}"
 
-run_test "oc rm --yes ${JUNK_DIR}/${JUNK_FILE}"
-run_test "oc rm --yes ${JUNK_DIR}"
+run_test "${CMD} rm --yes ${JUNK_DIR}/${JUNK_FILE}"
+run_test "${CMD} rm --yes ${JUNK_DIR}"
 
 rm ${JUNK_DIR}/${JUNK_FILE}
 rmdir ${JUNK_DIR}

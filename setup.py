@@ -23,14 +23,15 @@ class CleanCommand(Command):
         os.system("find pocli -name '*.pyc' -delete -print")
 
 entry_points = {
-    'console_scripts': ['oc=pocli.cli:main']
+    'console_scripts': ['oc=pocli.cli:main',  # oc stands for OwnCloud
+                        'ds=pocli.cli:main']  # ds stands for DataShare
 }
 
 with open('README.rst') as fp:
     long_description = fp.read()
 
 setup(name='pocli',
-      version='0.1.9',
+      version='0.1.10',
       description='Python-based command-line client for OwnCloud',
       long_description=long_description,
       author='Florian Kaiser, Klaus Reuter',
