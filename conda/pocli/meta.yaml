@@ -1,0 +1,72 @@
+package:
+  name: pocli
+  version: "0.1.10"
+
+#source:
+#  fn: pocli-0.1.10.tar.gz
+#  url: https://pypi.python.org/packages/b1/db/c8d9f836f311e1a7d5e8987f1d7b7eda13bf7b62ce2229fd4c31500fa939/pocli-0.1.10.tar.gz
+#  md5: 2d7c60f029baba2131da10a1cc752a6c
+#  patches:
+   # List any patch files here
+   # - fix.patch
+source:
+    path: ../../
+
+build:
+  # noarch_python: True
+  # preserve_egg_dir: True
+  entry_points:
+    # Put any entry points (scripts to be generated automatically) here. The
+    # syntax is module:function.  For example
+    #
+    # - pocli = pocli:main
+    #
+    # Would create an entry point called pocli that calls pocli.main()
+
+    - oc=pocli.cli:main
+    - ds=pocli.cli:main
+
+  # If this is a new build for the same version, increment the build
+  # number. If you do not include this key, it defaults to 0.
+  # number: 1
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - requests
+    - pyocclient
+
+  run:
+    - python
+    - requests
+    - pyocclient
+
+test:
+  # Python imports
+  imports:
+    - pocli
+
+  commands:
+    # You can put test commands to be run here.  Use this to test that the
+    # entry points work.
+
+    - oc --help
+    - ds --help
+
+  # You can also put a file called run_test.py in the recipe that will be run
+  # at test time.
+
+  # requires:
+    # Put any additional test requirements here.  For example
+    # - nose
+
+about:
+  #home: The package home page
+  license: MIT
+  summary: 'Python-based command-line client for OwnCloud'
+  license_family: MIT
+
+# See
+# http://docs.continuum.io/conda/build.html for
+# more information about meta.yaml
