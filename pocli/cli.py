@@ -6,12 +6,13 @@ Florian Kaiser (fek@rzg.mpg.de), Klaus Reuter (khr@rzg.mpg.de)
 
 
 import os
+import argparse
 from . import lib
 
 
-def parse_args():
-    import argparse
-    from . import lib
+def main():
+    if not os.path.isfile(lib.get_ocrc()):
+        lib.init_ocrc()
     # ---
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(help='Commands')
@@ -49,14 +50,14 @@ def parse_args():
         'check', help='check current configuration')
     parser_check.set_defaults(func=lib.check)
     # ---
-    return parser.parse_args()
-
-
-def main():
-    if not os.path.isfile(lib.get_ocrc()):
-        lib.init_ocrc()
-    args = parse_args()
-    args.func(args)
+    args = parser.parse_args()
+    try:
+        func = args.func
+    except AttributeError:
+        parser.print_help()
+        parser.exit()
+    else:
+        func(args)
 
 
 if __name__ == "__main__":

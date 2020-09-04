@@ -31,13 +31,13 @@ with open('README.rst') as fp:
     long_description = fp.read()
 
 setup(name='pocli',
-      version='0.1.10',
+      version='0.1.11',
       description='Python-based command-line client for OwnCloud',
       long_description=long_description,
       author='Florian Kaiser, Klaus Reuter',
       author_email='klaus.reuter@gmail.com',
       packages=['pocli'],
-      install_requires=['requests', 'pyocclient'],
+      install_requires=['six', 'pyocclient'],
       cmdclass={'clean': CleanCommand},
       entry_points=entry_points,
       scripts=['ocpasswd.bash'],

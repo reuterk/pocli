@@ -16,6 +16,7 @@ import locale
 import argparse
 import getpass
 import owncloud
+from six.moves import input
 
 
 def get_ocrc():
@@ -27,7 +28,7 @@ def get_ocrc():
 
 def init_ocrc():
     """Initialize the pocli <.ocrc> configuration file.
-    
+
     By default, a MPCDF datashare compatible configuration will be created.
     """
     config = {}
@@ -42,7 +43,7 @@ def init_ocrc():
 
 def _client():
     """Construct and return ownCloud client object.
-    
+
     The configuration is read from the configuration file <~/ocrc>.
     The password is read from the environment variable OC_PASSWORD,
     in case this variable is not set the user is prompted interactively.
@@ -110,7 +111,7 @@ def _query_yes_no(question, default="yes"):
         raise ValueError("invalid default answer: '%s'" % default)
     while 1:
         sys.stdout.write(question + prompt)
-        choice = raw_input().lower()
+        choice = input().lower()
         if default is not None and choice == '':
             return default
         elif choice in valid.keys():
