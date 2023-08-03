@@ -110,7 +110,7 @@ following examples illustrate the basic usage:
 
 ``oc check``
 
-Under the hood
+Configuration
 --------------
 
 The connection to an ownCloud instance requires a valid configuration. The
@@ -119,6 +119,12 @@ first invocation of the ``oc`` command. The initial default configuration is for
 the MPCDF DataShare service, however, it can be configured freely to connect to
 other ownCloud instances. Simply adapt the configuration file to your needs. No
 credentials are ever stored in "~/.ocrc".
+
+Further configuration can be overridden by environment variables,
+* ``OC_CONFIG_FILE`` can override the location of the configuration file
+* ``OC_USER`` can override the username of the configuration file
+* ``OC_SERVER`` can override the server address of the configuration file
+* ``OC_DEBUG`` can override the DEBUG setting of the configuration file
 
 Password handling
 -----------------
