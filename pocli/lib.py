@@ -21,8 +21,10 @@ from six.moves import input
 
 def get_ocrc():
     """Return the full path to the pocli <.ocrc> configuration file."""
-    home = os.path.expanduser('~')
-    rcfile = os.path.join(home, '.ocrc')
+    rcfile = os.environ.get("OC_CONFIG_FILE")
+    if rcfile is None:
+        home = os.path.expanduser('~')
+        rcfile = os.path.join(home, '.ocrc')
     return rcfile
 
 
@@ -52,6 +54,10 @@ def _client():
     rcfile = get_ocrc()
     with open(rcfile, 'r') as fp:
         config = json.loads(fp.read())
+    # Allow overrides with environment variables
+    for key in ["OC_SERVER", "OC_USER", "OC_DEBUG"]:
+        if key in os.environ:
+            config[key] = os.environ[key]
     # for the MPCDF datashare service we forbid the use of OC_PASSWORD
     if (('datashare.mpcdf.mpg.de' not in config['OC_SERVER']) or ('OC_UNIT_TEST_COOKIE' in os.environ)) and ('OC_PASSWORD' in os.environ):
         password = os.environ['OC_PASSWORD']
